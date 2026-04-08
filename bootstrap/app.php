@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'verified.bodyguard' => \App\Http\Middleware\VerifiedBodyguard::class,
+            'user.only' => \App\Http\Middleware\EnsureIsRegularUser::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

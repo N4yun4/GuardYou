@@ -95,6 +95,18 @@
 @section('content')
 <div class="dashboard-vault">
 
+    @if(session('success'))
+    <div style="background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.25); border-radius:10px; padding:1rem 1.25rem; margin-bottom:2rem; font-size:0.85rem; color:#4ade80;">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if(session('info'))
+    <div style="background:rgba(255,193,7,0.08); border:1px solid rgba(255,193,7,0.25); border-radius:10px; padding:1rem 1.25rem; margin-bottom:2rem; font-size:0.85rem; color:#fbbf24;">
+        {{ session('info') }}
+    </div>
+    @endif
+
     <header class="dashboard-header">
         <div>
             <span class="hero-label" style="margin-bottom:1rem;">Command Interface</span>
@@ -111,6 +123,34 @@
         <h2 class="dashboard-title" style="font-size:2.5rem; margin-bottom:1rem;">Protective Asset Required?</h2>
         <p style="color:var(--color-on-surface-variant); max-width:500px; margin:0 auto 2.5rem;">Access the world's most elite personal protection network. Secure your life and legacy with a single mandate.</p>
         <a href="{{ route('bodyguards.index') }}" class="btn-primary">Initiate Deployment Protocol</a>
+    </section>
+
+    <!-- BECOME A BODYGUARD CTA -->
+    <section style="margin-bottom:3rem;">
+        <div style="
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        ">
+            <div>
+                <span class="section-label" style="margin-bottom:0.5rem;">Monetize Your Skills</span>
+                <h3 style="font-size:1.4rem; font-weight:900; color:#fff; margin-bottom:0.5rem; letter-spacing:-0.02em;">
+                    Jadilah <span style="color:var(--color-gold);">Bodyguard</span> Profesional
+                </h3>
+                <p style="color:var(--color-on-surface-variant); font-size:0.85rem; max-width:480px; margin:0;">
+                    Punya pengalaman keamanan? Daftarkan diri Anda dan mulai menerima klien dari seluruh platform.
+                </p>
+            </div>
+            <a href="{{ route('bodyguard.register') }}" class="btn-outline" style="white-space:nowrap; flex-shrink:0;">
+                Daftar Sebagai Bodyguard
+            </a>
+        </div>
     </section>
 
     <!-- ACTIVE ASSIGNMENTS -->

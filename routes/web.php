@@ -41,6 +41,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/bodyguard/profile', [BodyguardController::class, 'updateProfile'])->name('bodyguard.profile.update');
     });
 
+    // Bodyguard Registration (untuk user yang ingin menjadi bodyguard)
+    Route::middleware('user.only')->group(function () {
+        Route::get('/register/bodyguard', [BodyguardController::class, 'registerForm'])->name('bodyguard.register');
+        Route::post('/register/bodyguard', [BodyguardController::class, 'registerStore'])->name('bodyguard.register.store');
+    });
+
     // Bookings (User only)
     Route::middleware('role:user')->group(function () {
         Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');

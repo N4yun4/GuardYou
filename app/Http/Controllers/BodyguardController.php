@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bodyguard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class BodyguardController extends Controller
 {
@@ -57,6 +59,40 @@ class BodyguardController extends Controller
             ->with('success', 'Profil berhasil diperbarui.');
     }
 
+
+    public function registerForm(): View
+    {
+        return view('bodyguards.register');
+    }
+
+    public function registerStore(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'ktp_number'       => ['required', 'string', 'max:20', 'unique:bodyguards,ktp_number'],
+            'dob'              => ['required', 'date', 'before:-17 years'],
+            'height'           => ['required', 'integer', 'min:100', 'max:250'],
+            'weight'           => ['required', 'integer', 'min:40', 'max:200'],
+            'experience_years' => ['required', 'integer', 'min:0', 'max:50'],
+            'daily_rate'       => ['required', 'numeric', 'min:10000'],
+        ]);
+
+        $user = $request->user();
+
+        $user->bodyguard()->create([
+            'ktp_number'       => $validated['ktp_number'],
+            'dob'              => $validated['dob'],
+            'height'           => $validated['height'],
+            'weight'           => $validated['weight'],
+            'experience_years' => $validated['experience_years'],
+            'daily_rate'       => $validated['daily_rate'],
+            'is_verified'      => false,
+        ]);
+
+        $user->update(['role' => 'bodyguard']);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Pendaftaran bodyguard berhasil! Profil Anda sedang menunggu verifikasi admin.');
+    }
 
     public function index(Request $request)
     {

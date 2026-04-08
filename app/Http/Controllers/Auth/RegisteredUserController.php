@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -25,8 +24,6 @@ class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     *
-     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -34,28 +31,14 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:user,bodyguard'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'user',
         ]);
-
-        // Auto-create empty bodyguard profile if they registered as bodyguard
-        if ($request->role === 'bodyguard') {
-            $user->bodyguard()->create([
-                'ktp_number' => 'TBD-' . time(), 
-                'dob' => now(),
-                'height' => 0,
-                'weight' => 0,
-                'experience_years' => 0,
-                'daily_rate' => 0,
-                'is_verified' => false,
-            ]);
-        }
 
         event(new Registered($user));
 

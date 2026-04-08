@@ -313,7 +313,15 @@
                 <h4>Layanan</h4>
                 <ul>
                     <li><a href="{{ route('bodyguards.index') }}">Find Bodyguard</a></li>
-                    <li><a href="{{ route('register') }}">Daftar Bodyguard</a></li>
+                    <li>
+                        @auth
+                            @if(auth()->user()->role === 'user')
+                                <a href="{{ route('bodyguard.register') }}">Daftar Bodyguard</a>
+                            @endif
+                        @else
+                            <a href="{{ route('register') }}">Daftar Bodyguard</a>
+                        @endauth
+                    </li>
                 </ul>
             </div>
             <div class="footer-col">

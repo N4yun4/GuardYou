@@ -55,27 +55,6 @@
     .form-input::placeholder { color: var(--color-on-surface-variant); }
     .form-select option { background: var(--color-surface-container); color: #fff; }
 
-    /* Role selector */
-    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .role-option { display: none; }
-    .role-label {
-        display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-        padding: 1rem 0.75rem;
-        background: rgba(255,255,255,0.03);
-        border: 1.5px solid rgba(255,255,255,0.1);
-        border-radius: 10px; cursor: pointer;
-        transition: all 0.2s ease;
-        text-align: center;
-    }
-    .role-label:hover { border-color: rgba(220,20,60,0.3); background: rgba(220,20,60,0.04); }
-    .role-option:checked + .role-label {
-        border-color: var(--color-gold);
-        background: rgba(220,20,60,0.08);
-    }
-    .role-icon { font-size: 1.5rem; }
-    .role-name { font-size: 0.78rem; font-weight: 700; color: #fff; }
-    .role-desc { font-size: 0.68rem; color: var(--color-on-surface-muted); }
-
     .error-msg { font-size: 0.75rem; color: #f87171; font-weight: 500; margin-top: 0.4rem; display: block; }
 
     .auth-footer { text-align: center; margin-top: 1.5rem; }
@@ -129,31 +108,6 @@
                         class="form-input" required autocomplete="new-password"
                         placeholder="Ulangi password">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" style="margin-bottom:0.75rem;">Daftar Sebagai</label>
-                <div class="role-grid">
-                    <div>
-                        <input type="radio" name="role" value="user" id="role_user"
-                            class="role-option" {{ old('role', 'user') == 'user' ? 'checked' : '' }}>
-                        <label for="role_user" class="role-label">
-                            <span class="role-icon">🙋</span>
-                            <span class="role-name">Klien</span>
-                            <span class="role-desc">Cari bodyguard</span>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="radio" name="role" value="bodyguard" id="role_bodyguard"
-                            class="role-option" {{ old('role') == 'bodyguard' ? 'checked' : '' }}>
-                        <label for="role_bodyguard" class="role-label">
-                            <span class="role-icon">🛡️</span>
-                            <span class="role-name">Bodyguard</span>
-                            <span class="role-desc">Tawarkan jasa</span>
-                        </label>
-                    </div>
-                </div>
-                @error('role') <span class="error-msg">{{ $message }}</span> @enderror
             </div>
 
             <button type="submit" class="btn-primary" style="width:100%; padding:0.9rem; font-size:0.85rem; margin-top:0.5rem;">
